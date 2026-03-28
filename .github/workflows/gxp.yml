@@ -1,0 +1,33 @@
+name: GXP Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: |
+        cd gxp-demo
+        npm install
+
+    - name: Run app (test + tracking)
+      run: |
+        cd gxp-demo
+        npm run test
+
+    - name: Generate report
+      run: |
+        cd gxp-demo
+        npm run report
